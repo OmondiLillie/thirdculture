@@ -1,907 +1,743 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Third Culture — Help Us Build Something For You</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>The Third Culture — A game where no one has the home advantage</title>
+<meta name="description" content="A phone-down card game for couples and families building a culture of their own. Not therapy. Not trivia." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f0c08;
-    --surface: #1a1510;
-    --card: #221c14;
-    --cream: #f0e8d8;
-    --warm: #c8b898;
-    --muted: #7a6e5e;
-    --terra: #c4623a;
-    --gold: #d4a847;
-    --sage: #6b8f6e;
-    --border: rgba(200,184,152,0.12);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--cream);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    line-height: 1.75;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(15,12,8,0.97), transparent);
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: var(--gold);
-    letter-spacing: 1px;
-  }
-
-  .nav-cta {
-    display: inline-block;
-    padding: 10px 24px;
-    background: var(--terra);
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-radius: 2px;
-    transition: background 0.2s;
-  }
-
-  .nav-cta:hover { background: #b3542f; }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    padding: 140px 48px 80px;
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: 40%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px; height: 500px;
-    background: radial-gradient(ellipse, rgba(196,98,58,0.07) 0%, rgba(212,168,71,0.03) 40%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.7rem;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 24px;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 7vw, 6rem);
-    font-weight: 300;
-    line-height: 1.05;
-    margin-bottom: 24px;
-    animation: fadeUp 0.8s 0.1s ease both;
-  }
-
-  .hero h1 em { font-style: italic; color: var(--gold); }
-
-  .hero-sub {
-    font-size: 1rem;
-    color: var(--warm);
-    max-width: 520px;
-    margin-bottom: 16px;
-    line-height: 1.75;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-
-  .hero-sub strong { color: var(--cream); font-weight: 500; }
-
-  /* ── EARLY CTA BLOCK ── */
-  .early-cta {
-    background: rgba(196,98,58,0.1);
-    border: 1px solid rgba(196,98,58,0.3);
-    border-radius: 6px;
-    padding: 28px 32px;
-    margin-top: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.35s ease both;
-    position: relative;
-    z-index: 2;
-  }
-
-  .early-cta-left h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--cream);
-  }
-
-  .early-cta-left p {
-    font-size: 0.82rem;
-    color: var(--warm);
-    line-height: 1.5;
-  }
-
-  .early-cta-left .urgency {
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .urgency-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-    animation: pulse 2s infinite;
-  }
-
-  .btn-hero {
-    display: inline-block;
-    padding: 16px 36px;
-    background: var(--terra);
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 500;
-    border-radius: 2px;
-    white-space: nowrap;
-    transition: all 0.25s;
-    flex-shrink: 0;
-  }
-
-  .btn-hero:hover {
-    background: #b3542f;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(196,98,58,0.3);
-  }
-
-  .hero-scroll {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--muted);
-    font-size: 0.72rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 48px;
-    animation: fadeUp 1s 0.6s ease both;
-  }
-
-  .scroll-line {
-    width: 40px; height: 1px;
-    background: linear-gradient(to right, var(--muted), transparent);
-  }
-
-  /* ── STORY ── */
-  .story {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 80px 32px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .section-label {
-    font-size: 0.68rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .story p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.15rem, 2.2vw, 1.45rem);
-    font-weight: 300;
-    line-height: 1.75;
-    color: var(--warm);
-    margin-bottom: 24px;
-  }
-
-  .story p strong { font-weight: 600; color: var(--cream); }
-  .story p em { font-style: italic; color: var(--gold); }
-
-  /* ── INLINE QUOTE ── */
-  .inline-quote {
-    border-left: 2px solid var(--terra);
-    padding: 16px 0 16px 24px;
-    margin: 32px 0;
-  }
-
-  .inline-quote p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
-    font-style: italic;
-    color: var(--cream);
-    margin: 0 0 8px;
-  }
-
-  .inline-quote cite {
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-style: normal;
-  }
-
-  /* ── MID CTA ── */
-  .mid-cta {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 56px 32px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .mid-cta p {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-  }
-
-  .mid-cta h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-    font-weight: 300;
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-
-  .mid-cta h2 em { font-style: italic; color: var(--gold); }
-
-  .mid-cta .sub {
-    font-size: 0.88rem;
-    color: var(--warm);
-    margin-bottom: 28px;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-    letter-spacing: 0;
-  }
-
-  .btn-gold {
-    display: inline-block;
-    padding: 16px 44px;
-    background: var(--gold);
-    color: var(--bg);
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 500;
-    border-radius: 2px;
-    transition: all 0.25s;
-  }
-
-  .btn-gold:hover {
-    background: #e6ba55;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(212,168,71,0.3);
-  }
-
-  .time-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-    margin-top: 14px;
-  }
-
-  /* ── MOMENTS ── */
-  .moments {
-    padding: 80px 32px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .moments-inner { max-width: 980px; margin: 0 auto; }
-
-  .moments-header {
-    margin-bottom: 48px;
-  }
-
-  .moments-header h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 300;
-    line-height: 1.3;
-    margin-top: 12px;
-  }
-
-  .moments-header h2 em { font-style: italic; color: var(--gold); }
-
-  .moments-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-
-  @media (max-width: 700px) { .moments-grid { grid-template-columns: 1fr; } }
-
-  .moment-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-
-  .moment-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--terra);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-  }
-
-  .moment-card.gold-accent::before { background: var(--gold); }
-  .moment-card.sage-accent::before { background: var(--sage); }
-  .moment-card:hover::before { transform: scaleX(1); }
-  .moment-card:hover { border-color: rgba(196,98,58,0.25); transform: translateY(-3px); }
-
-  .moment-icon { font-size: 1.4rem; margin-bottom: 12px; display: block; }
-
-  .moment-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cream);
-    margin-bottom: 8px;
-  }
-
-  .moment-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
-
-  /* ── WHO ── */
-  .who {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 80px 32px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .who-inner { max-width: 860px; margin: 0 auto; }
-
-  .who-intro {
-    max-width: 560px;
-    margin-bottom: 48px;
-  }
-
-  .who-intro h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-    font-weight: 300;
-    line-height: 1.3;
-    margin-top: 12px;
-    margin-bottom: 16px;
-  }
-
-  .who-intro h2 em { font-style: italic; color: var(--gold); }
-
-  .who-intro p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
-
-  .who-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  @media (max-width: 600px) { .who-grid { grid-template-columns: 1fr; } }
-
-  .who-card {
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px 22px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    transition: border-color 0.25s, background 0.25s;
-  }
-
-  .who-card:hover {
-    border-color: rgba(212,168,71,0.25);
-    background: rgba(212,168,71,0.03);
-  }
-
-  .who-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex-shrink: 0;
-    margin-top: 6px;
-  }
-
-  .who-dot.terra { background: var(--terra); }
-  .who-dot.sage { background: var(--sage); }
-
-  .who-card h4 { font-size: 0.88rem; font-weight: 500; color: var(--cream); margin-bottom: 3px; }
-  .who-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
-
-  /* ── PROMISES ── */
-  .promises {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 80px 32px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .promise-list {
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 32px;
-  }
-
-  .promise-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 18px;
-    padding: 18px 22px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .promise-item:last-child { border-bottom: none; }
-
-  .promise-check {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: rgba(107,143,110,0.15);
-    border: 1px solid var(--sage);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-    font-size: 0.65rem;
-    color: var(--sage);
-  }
-
-  .promise-item p { font-size: 0.86rem; color: var(--warm); line-height: 1.65; margin: 0; }
-  .promise-item p strong { color: var(--cream); font-weight: 500; }
-
-  /* ── FINAL CTA ── */
-  .final-cta {
-    background: var(--terra);
-    padding: 80px 32px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-  }
-
-  .final-cta::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-    pointer-events: none;
-  }
-
-  .final-cta::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: -60px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.08);
-    pointer-events: none;
-  }
-
-  .final-cta .eyebrow {
-    font-size: 0.7rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    opacity: 0.75;
-    margin-bottom: 20px;
-  }
-
-  .final-cta h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .final-cta h2 em { font-style: italic; }
-
-  .final-cta p {
-    font-size: 0.9rem;
-    opacity: 0.85;
-    max-width: 480px;
-    margin: 0 auto 36px;
-    line-height: 1.75;
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn-white {
-    display: inline-block;
-    padding: 18px 52px;
-    background: var(--cream);
-    color: var(--terra);
-    text-decoration: none;
-    font-size: 0.82rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 500;
-    border-radius: 2px;
-    transition: all 0.25s;
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn-white:hover {
-    background: white;
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
-  }
-
-  .final-meta {
-    margin-top: 20px;
-    font-size: 0.75rem;
-    opacity: 0.65;
-    position: relative;
-    z-index: 1;
-  }
-
-  .final-meta a {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 36px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    color: var(--gold);
-    font-size: 1rem;
-  }
-
-  .footer-note { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; text-align: right; }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.65s ease, transform 0.65s ease;
-  }
-
-  .reveal.visible { opacity: 1; transform: none; }
-
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  @media (max-width: 600px) {
-    nav { padding: 16px 20px; }
-    .hero { padding: 120px 24px 60px; }
-    .early-cta { flex-direction: column; text-align: center; }
-    footer { padding: 28px 24px; }
-    .footer-note { text-align: left; }
-  }
+:root{
+  --espresso:#2A1F18;
+  --espresso-soft:#3A2C22;
+  --espresso-deep:#1F1610;
+  --cream:#F5EDD9;
+  --cream-warm:#E8DEC4;
+  --cream-card:#F8F2E6;
+  --terracotta:#C46A4C;
+  --terracotta-deep:#A55538;
+  --gold:#D4A85A;
+  --sage:#9CAB85;
+  --highlight:#F2E27A;
+  --ink:#2A2722;
+  --muted:#6B635A;
+  --serif:'Cormorant Garamond', Georgia, serif;
+  --sans:'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--espresso);color:var(--cream);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+/* ---- layout ---- */
+.shell{max-width:1180px;margin:0 auto;padding:0 22px}
+.section{padding:80px 0;position:relative}
+@media(min-width:760px){.section{padding:120px 0}}
+
+/* ---- type ---- */
+.serif{font-family:var(--serif);font-weight:500;letter-spacing:-.005em}
+.kicker{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);padding:6px 12px;border:1px solid rgba(196,106,76,.35);border-radius:99px;background:rgba(196,106,76,.06)}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1.lede{font-family:var(--serif);font-weight:500;font-size:clamp(38px,8.5vw,80px);line-height:1.02;letter-spacing:-.015em;color:var(--cream);margin:20px 0 18px}
+h2.head{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4.6vw,46px);line-height:1.08;letter-spacing:-.01em;color:var(--cream);margin:0 0 14px}
+h3.sub{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.6vw,28px);color:var(--terracotta);margin:0 0 14px}
+p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
+@media(min-width:760px){p.body{font-size:18px;line-height:1.6}}
+
+/* ---- navbar ---- */
+.nav{position:absolute;top:0;left:0;right:0;z-index:30;padding:22px 22px;display:flex;align-items:center;justify-content:space-between}
+.nav .mark{font-family:var(--serif);font-style:italic;font-size:20px;letter-spacing:-.01em;color:var(--cream)}
+.nav .util{display:flex;gap:22px;font-size:13px;color:var(--cream-warm)}
+.nav .util a:hover{color:var(--terracotta)}
+@media(max-width:580px){.nav .util a:not(.beta-link){display:none}}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:99px;font-weight:600;font-size:15px;transition:transform .2s ease, background .2s ease, box-shadow .2s ease;line-height:1}
+.btn-primary{background:var(--terracotta);color:var(--cream);box-shadow:0 6px 24px rgba(196,106,76,.35), inset 0 -2px 0 rgba(0,0,0,.18)}
+.btn-primary:hover{background:var(--terracotta-deep);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--cream);border:1.5px solid rgba(245,237,217,.32)}
+.btn-ghost:hover{border-color:var(--cream);background:rgba(245,237,217,.05)}
+.btn-sm{padding:10px 16px;font-size:13px}
+.btn .arrow{transition:transform .2s ease}
+.btn:hover .arrow{transform:translateX(3px)}
+
+/* ---- HERO ---- */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:90px;padding-bottom:40px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 50% at 80% 20%, rgba(212,168,90,.10) 0%, transparent 60%),
+  radial-gradient(60% 50% at 10% 80%, rgba(196,106,76,.12) 0%, transparent 60%);
+  pointer-events:none}
+.hero .grid{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;position:relative}
+@media(min-width:900px){.hero .grid{grid-template-columns:1.05fr .95fr;gap:60px}}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero .tiny{font-size:13px;color:var(--cream-warm);opacity:.7;margin-top:24px;letter-spacing:.01em}
+
+/* ---- hero card visual ---- */
+.heroCard{justify-self:center;perspective:1400px;width:min(86vw,360px);aspect-ratio:3/4;position:relative}
+@media(min-width:900px){.heroCard{justify-self:end;width:340px}}
+.heroCard .stack{position:absolute;inset:0}
+.heroCard .stack > div{position:absolute;inset:0;border-radius:18px;background:var(--cream-card);box-shadow:0 28px 60px rgba(0,0,0,.45)}
+.heroCard .stack .s1{transform:translate(-14px,18px) rotate(-6deg);background:#EDE2C7;opacity:.78}
+.heroCard .stack .s2{transform:translate(8px,8px) rotate(4deg);background:#F0E6CE;opacity:.92}
+.heroCard .top{position:absolute;inset:0;border-radius:18px;background:var(--cream-card);color:var(--ink);
+  display:flex;flex-direction:column;justify-content:space-between;padding:22px 22px 20px;
+  box-shadow:0 30px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.06);
+  transform-origin:center;animation:breathe 6s ease-in-out infinite;cursor:pointer}
+.heroCard .top:hover{box-shadow:0 36px 90px rgba(196,106,76,.32), inset 0 0 0 1px rgba(196,106,76,.5)}
+@media(prefers-reduced-motion:reduce){.heroCard .top{animation:none}}
+@keyframes breathe{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1.5deg)}}
+.heroCard .tab{font-family:var(--sans);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--terracotta)}
+.heroCard .prompt{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);line-height:1.18;font-weight:500;color:var(--ink)}
+.heroCard .footer{display:flex;justify-content:space-between;align-items:flex-end;font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.heroCard .mark{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--terracotta);text-transform:none;letter-spacing:0}
+.heroCard .num{font-weight:700}
+
+/* ---- DEMO ---- */
+.demoSection{background:linear-gradient(180deg,var(--espresso) 0%,var(--espresso-deep) 100%);position:relative}
+.demoWrap{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
+@media(min-width:900px){.demoWrap{grid-template-columns:.95fr 1.05fr;gap:60px;align-items:center}}
+
+.modes{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 16px;margin:0 -22px;padding-left:22px;padding-right:22px;scroll-snap-type:x mandatory}
+.modes::-webkit-scrollbar{display:none}
+.mode{flex:0 0 auto;scroll-snap-align:start;padding:10px 16px;border-radius:99px;background:rgba(245,237,217,.06);border:1px solid rgba(245,237,217,.16);color:var(--cream-warm);font-size:13px;font-weight:500;letter-spacing:.01em;transition:all .2s ease}
+.mode:hover{border-color:rgba(245,237,217,.32)}
+.mode.active{background:var(--terracotta);color:var(--cream);border-color:var(--terracotta);box-shadow:0 6px 18px rgba(196,106,76,.4)}
+
+.demoCard{perspective:1400px;width:min(86vw,360px);aspect-ratio:3/4;position:relative;margin:0 auto}
+.flipper{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.flipper.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:18px;background:var(--cream-card);color:var(--ink);
+  padding:24px 22px 22px;display:flex;flex-direction:column;justify-content:space-between;
+  backface-visibility:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.06)}
+.face.back{transform:rotateY(180deg);background:#EFE4C9;}
+.face .tab{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--terracotta)}
+.face .prompt{font-family:var(--serif);font-size:clamp(20px,2.4vw,26px);line-height:1.18;font-weight:500;color:var(--ink)}
+.face .footer{display:flex;justify-content:space-between;align-items:flex-end;font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.face .mark{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--terracotta);text-transform:none;letter-spacing:0}
+.face .back-title{font-family:var(--serif);font-style:italic;color:var(--terracotta);font-size:14px;letter-spacing:.04em;text-transform:none}
+.face .back-body{font-family:var(--serif);font-size:18px;line-height:1.4;color:var(--ink)}
+
+@media(prefers-reduced-motion:reduce){.flipper{transition:opacity .3s ease}.flipper.flipped{transform:none}.flipper.flipped .face.front{opacity:0;pointer-events:none}.flipper.flipped .face.back{transform:none}}
+
+.demoCtrls{margin-top:22px;display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.revealBtn{background:rgba(212,168,90,.10);border:1px solid rgba(212,168,90,.32);color:var(--gold);padding:14px 18px;border-radius:12px;font-weight:600;letter-spacing:.01em;transition:all .2s ease}
+.revealBtn:hover{background:rgba(212,168,90,.18);color:var(--cream);border-color:var(--gold)}
+.shareRow{display:flex;gap:8px;flex-wrap:wrap}
+.share{flex:1 1 auto;min-width:140px;padding:11px 14px;border-radius:10px;background:rgba(245,237,217,.04);border:1px solid rgba(245,237,217,.14);font-size:13px;color:var(--cream-warm);transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:6px}
+.share:hover{color:var(--cream);background:rgba(196,106,76,.10);border-color:var(--terracotta)}
+.share.ghost{background:transparent}
+.pullMore{display:flex;justify-content:center;margin-top:4px}
+.pullMore button{font-size:13px;color:var(--gold);text-decoration:underline;text-decoration-color:rgba(212,168,90,.4);text-underline-offset:4px;padding:8px 12px;background:transparent}
+.pullMore button:hover{color:var(--cream)}
+
+/* ---- 3-up tile blocks ---- */
+.tiles3{display:grid;grid-template-columns:1fr;gap:18px;margin-top:36px}
+@media(min-width:760px){.tiles3{grid-template-columns:1fr 1fr 1fr;gap:22px}}
+.tile{background:rgba(245,237,217,.03);border:1px solid rgba(245,237,217,.10);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:10px}
+.tile .tile-x{font-family:var(--serif);font-size:22px;color:var(--terracotta)}
+.tile .tile-check{font-family:var(--serif);font-size:22px;color:var(--sage)}
+.tile h4{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--cream)}
+.tile p{font-size:15px;color:var(--cream-warm);line-height:1.55}
+
+/* ---- modes grid ---- */
+.modeGrid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:34px}
+@media(min-width:680px){.modeGrid{grid-template-columns:1fr 1fr}}
+@media(min-width:1020px){.modeGrid{grid-template-columns:repeat(5,1fr)}}
+.modeCard{background:rgba(245,237,217,.04);border:1px solid rgba(245,237,217,.12);border-radius:var(--radius);padding:22px;cursor:pointer;transition:all .25s ease;display:flex;flex-direction:column;gap:8px}
+.modeCard:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(212,168,90,.06)}
+.modeCard .mode-name{font-family:var(--serif);font-size:22px;color:var(--cream)}
+.modeCard .mode-blurb{font-size:13px;color:var(--cream-warm);min-height:42px}
+.modeCard .mode-sample{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:15px;line-height:1.4;padding-top:10px;border-top:1px solid rgba(245,237,217,.10)}
+
+/* ---- carousel ---- */
+.cardCarouselWrap{margin-top:36px;position:relative;margin-left:-22px;margin-right:-22px}
+.cardCarousel{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 22px 24px}
+.cardCarousel::-webkit-scrollbar{display:none}
+.miniCard{flex:0 0 auto;scroll-snap-align:start;width:260px;aspect-ratio:3/4;background:var(--cream-card);color:var(--ink);border-radius:16px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.miniCard .tab{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--terracotta)}
+.miniCard.gold .tab{color:#9c7a30}
+.miniCard.sage .tab{color:#5f7547}
+.miniCard p{font-family:var(--serif);font-size:18px;line-height:1.2;color:var(--ink)}
+.miniCard .tag-cta{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:none;text-align:left;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.miniCard .tag-cta:hover{color:var(--terracotta)}
+
+/* ---- pouch / vault / house cards section ---- */
+.featureSection{background:var(--espresso-deep)}
+.bigFeature{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
+@media(min-width:900px){.bigFeature{grid-template-columns:1fr 1fr;gap:60px}}
+.bigFeature .visual{aspect-ratio:4/3;border-radius:18px;background:linear-gradient(135deg,#3D5B40 0%,#243826 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bigFeature .visual::before{content:"";position:absolute;inset:14px;border:2px dashed rgba(245,237,217,.20);border-radius:14px}
+.bigFeature .pouch{width:60%;aspect-ratio:1.2/1;background:#7C8A66;border-radius:14px;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.4), inset 0 -8px 30px rgba(0,0,0,.25)}
+.bigFeature .pouch::before{content:"";position:absolute;top:14px;left:14%;right:14%;height:3px;background:rgba(0,0,0,.25);border-radius:2px}
+.bigFeature .pouch::after{content:"karibu.";position:absolute;bottom:18%;left:0;right:0;text-align:center;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--terracotta)}
+
+.vaultBanner{background:linear-gradient(90deg,rgba(156,171,133,.16) 0%,rgba(156,171,133,.06) 100%);border-top:1px solid rgba(156,171,133,.25);border-bottom:1px solid rgba(156,171,133,.25);padding:28px 0;text-align:center}
+.vaultBanner p{font-family:var(--serif);font-size:clamp(18px,2.2vw,24px);font-style:italic;color:var(--cream);max-width:760px;margin:0 auto;padding:0 22px}
+.vaultBanner .vault-label{display:inline-block;color:var(--sage);font-style:normal;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+
+/* ---- house cards visual ---- */
+.houseStack{position:relative;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+.hc{position:absolute;width:62%;aspect-ratio:3/4;background:var(--cream-card);border-radius:14px;padding:18px;box-shadow:0 18px 40px rgba(0,0,0,.4);transition:transform .3s ease}
+.hc-1{transform:translate(-32%,-8%) rotate(-7deg);background:#EFE4C9}
+.hc-2{transform:translate(0,4%) rotate(2deg);background:#F0E6CE}
+.hc-3{transform:translate(28%,-4%) rotate(6deg);background:#F4EBD3}
+.hc-blank{position:relative;background:var(--cream-card);transform:rotate(-1deg);z-index:2}
+.hc-blank .blank-line{height:1px;background:rgba(0,0,0,.14);margin:14px 0}
+.hc .hc-mark{font-family:var(--serif);font-style:italic;color:var(--terracotta);font-size:13px}
+.hc .hc-body{font-family:var(--serif);font-size:15px;color:var(--ink);line-height:1.3}
+.hc .hc-stamp{position:absolute;bottom:14px;right:14px;font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+
+/* ---- audience ---- */
+.audGrid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:36px}
+@media(min-width:680px){.audGrid{grid-template-columns:1fr 1fr}}
+@media(min-width:1020px){.audGrid{grid-template-columns:1fr 1fr 1fr}}
+.aud{background:rgba(245,237,217,.03);border:1px solid rgba(245,237,217,.10);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:8px}
+.aud .glyph{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:var(--serif);font-style:italic;margin-bottom:4px}
+.aud h4{font-family:var(--serif);font-size:20px;color:var(--cream)}
+.aud p{font-size:14px;color:var(--cream-warm);line-height:1.5}
+
+/* ---- founder ---- */
+.founderSection{background:var(--espresso)}
+.founder{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
+@media(min-width:760px){.founder{grid-template-columns:.8fr 1.2fr;gap:50px}}
+.founderPhoto{aspect-ratio:4/5;background:linear-gradient(135deg,#5A3E2A 0%,#3A2618 100%);border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:18px}
+.founderPhoto::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 35%, rgba(245,237,217,.10) 0%, transparent 50%)}
+.founderPhoto .photo-cap{position:relative;font-family:var(--serif);font-style:italic;color:var(--cream-warm);font-size:14px;opacity:.85}
+.founderBody p{font-size:17px;color:var(--cream-warm);margin-bottom:14px;line-height:1.6}
+.pullQuote{font-family:var(--serif);font-size:clamp(22px,2.8vw,30px);line-height:1.25;color:var(--terracotta);font-style:italic;border-left:3px solid var(--terracotta);padding:14px 0 14px 20px;margin-top:24px}
+
+/* ---- final CTA ---- */
+.finalCTA{background:linear-gradient(180deg,var(--espresso) 0%,var(--espresso-deep) 100%)}
+.ctaTiles{display:grid;grid-template-columns:1fr;gap:18px;margin-top:38px}
+@media(min-width:760px){.ctaTiles{grid-template-columns:1fr 1fr 1fr}}
+.ctaTile{background:rgba(245,237,217,.04);border:1px solid rgba(245,237,217,.12);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:14px;transition:all .25s ease}
+.ctaTile:hover{transform:translateY(-3px);border-color:var(--gold)}
+.ctaTile.featured{border-color:var(--terracotta);background:rgba(196,106,76,.08)}
+.ctaTile .badge{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+.ctaTile h4{font-family:var(--serif);font-size:24px;color:var(--cream)}
+.ctaTile p{font-size:14px;color:var(--cream-warm);flex:1}
+.ctaTile .ctabtn{display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border-radius:99px;background:var(--terracotta);color:var(--cream);font-size:14px;font-weight:600;justify-content:center}
+.ctaTile .ctabtn.ghost{background:transparent;border:1.5px solid rgba(245,237,217,.32)}
+.ctaTile .ctabtn:hover{transform:translateY(-1px)}
+
+/* ---- footer ---- */
+.foot{background:var(--espresso-deep);padding:50px 0 36px;border-top:1px solid rgba(245,237,217,.08)}
+.footRow{display:flex;flex-direction:column;gap:30px;justify-content:space-between}
+@media(min-width:760px){.footRow{flex-direction:row;gap:20px}}
+.foot .col h5{font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px}
+.foot .col a{display:block;font-size:14px;color:var(--cream-warm);margin-bottom:6px}
+.foot .col a:hover{color:var(--terracotta)}
+.foot .trust{font-size:13px;color:var(--cream-warm);max-width:380px;line-height:1.5}
+.foot .copy{margin-top:30px;padding-top:22px;border-top:1px solid rgba(245,237,217,.08);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* ---- toast ---- */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--cream);color:var(--ink);padding:12px 20px;border-radius:99px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:all .3s ease;z-index:100;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---- in-view stagger ---- */
+.stagger > *{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+.stagger.in > *{opacity:1;transform:none}
+.stagger.in > *:nth-child(2){transition-delay:.08s}
+.stagger.in > *:nth-child(3){transition-delay:.16s}
+.stagger.in > *:nth-child(4){transition-delay:.24s}
+.stagger.in > *:nth-child(5){transition-delay:.32s}
+.stagger.in > *:nth-child(6){transition-delay:.40s}
+@media(prefers-reduced-motion:reduce){.stagger > *{opacity:1;transform:none;transition:none}}
+
+/* focus */
+:focus-visible{outline:2px solid var(--highlight);outline-offset:2px;border-radius:6px}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-logo">The Third Culture</span>
-  <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" class="nav-cta">Add Your Voice</a>
+<nav class="nav">
+  <a href="#" class="mark">The Third Culture</a>
+  <div class="util">
+    <a href="#story">Story</a>
+    <a href="#cards">The deck</a>
+    <a href="#cta" class="beta-link" style="color:var(--terracotta);font-weight:600">Beta →</a>
+  </div>
 </nav>
 
-<!-- ① HERO + EARLY CTA -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div>
-    <p class="hero-eyebrow">A Game In The Making · Your Voice Shapes It</p>
-    <h1>What if no one had<br>the <em>home advantage?</em></h1>
-    <p class="hero-sub">We are Bill and Lili, a Kenyan-American couple who kept sitting down to play games that only worked for one of us. So we decided to build something different. <strong>We're building it this summer and we want your story in it.</strong></p>
+<!-- ============= HERO ============= -->
+<header class="hero">
+  <div class="shell">
+    <div class="grid">
+      <div>
+        <span class="kicker">A game in the making</span>
+        <h1 class="lede">Some games have a home advantage.<br><em style="font-style:italic;color:var(--terracotta)">This one doesn’t.</em></h1>
+        <p class="body" style="max-width:54ch">A phone-down card game for couples and families building a culture of their own. Not therapy. Not trivia. Just the conversations you keep having to translate, finally turned into a game.</p>
+        <div class="ctas">
+          <a href="#demo" class="btn btn-primary" id="heroPrimary">Pull a Card <span class="arrow">→</span></a>
+          <a href="#cta" class="btn btn-ghost">Join the Beta</a>
+        </div>
+        <p class="tiny">For families that celebrate more than one kind of home.</p>
+      </div>
 
-    <!-- EARLY CTA — moved up per ChatGPT recommendation -->
-    <div class="early-cta">
-      <div class="early-cta-left">
-        <h3>Help shape the first prototype</h3>
-        <p>4 minutes. 13 questions. Your experience directly influences what gets built.</p>
-        <div class="urgency">
-          <span class="urgency-dot"></span>
-          We're building the first prototype this summer — your story could be in it
+      <div class="heroCard" id="heroCard" role="button" tabindex="0" aria-label="Sample card — tap to play">
+        <div class="stack"><div class="s1"></div><div class="s2"></div></div>
+        <div class="top">
+          <div>
+            <div class="tab">Subtitles, Please</div>
+          </div>
+          <div class="prompt">What does your family do <em>instead</em> of saying “I love you”?</div>
+          <div class="footer">
+            <div class="mark">the third culture</div>
+            <div class="num">№ 04</div>
+          </div>
         </div>
       </div>
-      <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" class="btn-hero">Add My Voice →</a>
     </div>
   </div>
+</header>
 
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Our Story</span>
+<!-- ============= DEMO ============= -->
+<section class="section demoSection" id="demo">
+  <div class="shell">
+    <div class="demoWrap">
+
+      <div>
+        <span class="eyebrow">Sixty seconds in</span>
+        <h2 class="head">Pull a card.</h2>
+        <h3 class="sub">This is the game. Pick a mode. Tap to flip.</h3>
+        <p class="body">The card you draw is one your partner has probably seen too. Tap the card to flip it. Tap reveal to see why it lands. Send a card to your partner if you’re not in the same room.</p>
+
+        <div class="modes" role="tablist" aria-label="Choose a mode">
+          <button class="mode active" data-mode="Quick Laugh">Quick Laugh</button>
+          <button class="mode" data-mode="Subtitles">Subtitles</button>
+          <button class="mode" data-mode="Hot Take">Hot Take</button>
+          <button class="mode" data-mode="Family Table">Family Table</button>
+          <button class="mode" data-mode="Deep Cut">Deep Cut</button>
+        </div>
+
+        <div class="demoCtrls">
+          <button class="revealBtn" id="revealBtn">Reveal why this hits ↓</button>
+          <div class="shareRow">
+            <button class="share" data-share="partner">↗  Send to your partner</button>
+            <button class="share" data-share="screenshot">📷  Screenshot ready</button>
+            <button class="share ghost" data-share="beta">Save for the beta</button>
+          </div>
+          <div class="pullMore"><button id="pullAnother">Pull another →</button></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="demoCard">
+          <div class="flipper" id="flipper">
+            <div class="face front">
+              <div><div class="tab" id="cardTab">Quick Laugh</div></div>
+              <div class="prompt" id="cardPrompt">Show the face your family makes when guests overstay.</div>
+              <div class="footer">
+                <div class="mark">the third culture</div>
+                <div class="num" id="cardNum">№ 01</div>
+              </div>
+            </div>
+            <div class="face back">
+              <div><div class="back-title" id="backTitle">Why this hits</div></div>
+              <div class="back-body" id="backBody">This one lands because both of you have one. The “overstayed welcome” face is universal — but the timing, the eyebrow, the sigh? Those are inherited.</div>
+              <div class="footer">
+                <div class="mark">the third culture</div>
+                <button class="num" id="flipBack" style="color:var(--terracotta);cursor:pointer;background:none;border:0;font-size:11px;letter-spacing:.14em">↺ Card</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<!-- ② STORY — tightened by ~40% -->
-<section class="story" id="story">
-  <p class="section-label reveal">The Story That Started This</p>
-
-  <p class="reveal">We are Bill and Lili. He grew up in Illinois and Pennsylvania. She grew up in Kenya. We found each other, built a life together, and discovered something nobody warned us about. <strong>Even love has a default setting. And it is usually Western.</strong></p>
-
-  <p class="reveal">It started with game nights. Cards Against Humanity. Fibbage. Drawful. Someone would mention Dr. Who and the whole room would light up. <em>Lili would smile and go quiet.</em> Not because she didn't understand the words, but because she couldn't access the invisible layer underneath: the years of shared pop culture, the inside jokes of an entire civilization she hadn't grown up inside.</p>
-
-  <p class="reveal">So she did what many people do when they don't want to look stupid in a room full of people who all seem to belong: <strong>she declined to play.</strong> Nobody called her rude. Nobody said anything unkind. But she felt it, that particular loneliness of sitting in a room full of laughter you cannot fully enter.</p>
-
-  <div class="inline-quote reveal">
-    <p>"I didn't grow up playing board games at all. In my family, time together looked different — cooking side by side, telling stories across generations, sitting with each other without needing a card to tell you what to say. Connection was the game. People were the point."</p>
-    <cite>— Lili · Nairobi, Kenya</cite>
+<!-- ============= WHAT THIS IS / ISN'T ============= -->
+<section class="section">
+  <div class="shell">
+    <span class="eyebrow">Category fence-posting</span>
+    <h2 class="head">Three things this game <em>isn’t</em>. And three it <em>is</em>.</h2>
+    <div class="tiles3 stagger">
+      <div class="tile">
+        <span class="tile-x">✕  Not therapy</span>
+        <p>The Vault Rule means you can pass any card without explaining yourself. Boundary-setting is built in.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-x">✕  Not trivia</span>
+        <p>Nobody is right. Nobody is being tested. The deck is on your side.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-x">✕  Not a generic conversation deck</span>
+        <p>Built for people who have spent years translating themselves at the dinner table.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-check">✓  A phone-down ritual</span>
+        <p>Phones go in the pouch before the first card. The game cannot start until they do.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-check">✓  Cultural recognition with teeth</span>
+        <p>The kind of laugh that comes from being seen — and from finally putting words on a thing you’d stopped trying to explain.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-check">✓  A box that gets heavier</span>
+        <p>The deck grows with you. House Cards are forever. Most card games end. This one keeps writing itself.</p>
+      </div>
+    </div>
   </div>
-
-  <p class="reveal">Bill kept suggesting more games, not realizing the problem wasn't the game he'd chosen. <em>The problem was that no game had ever been built with her in mind.</em> The realization was gradual. When games involved real conversation, Lili came alive. She leaned in. She had more to say than anyone in the room.</p>
-
-  <p class="reveal">So Bill did something else instead. He learned her language. He studied Kenya's political history, the tribal relationships, the foods she grew up eating, the textures of her world. Not because he had to. <em>Because he wanted to live inside her reality the way she had always been expected to live inside his.</em> That is what brought them closer than any game ever had.</p>
-
-  <p class="reveal">And it is exactly what we want to build, for every couple, every family, every person who has ever smiled and gone quiet in a room that wasn't quite built for them. We are not ready to tell you what we are making yet and that is intentional. We want to build it with your feedback, your stories, your experiences. We want your frustrations to become the mechanics and your traditions to become the cards. <em>We are listening before we are building. That is a promise.</em></p>
 </section>
 
-<!-- ③ MID-PAGE CTA — inserted after story -->
-<div class="mid-cta">
-  <p class="reveal">This is your opportunity</p>
-  <h2 class="reveal">Your experience shapes <em>what gets built.</em></h2>
-  <p class="sub reveal">Early contributors have the most influence. We're reading every response personally and the first prototype goes to people who added their voice here.</p>
-  <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" class="btn-gold reveal">Add Your Voice (4 min) →</a>
-  <div class="time-badge reveal">
-    <span>🔒</span>
-    <span>You can skip your name — we only need your experience · We never sell your responses</span>
+<!-- ============= MODES ============= -->
+<section class="section" style="background:var(--espresso-soft)" id="modes">
+  <div class="shell">
+    <span class="eyebrow">Five modes. One deck.</span>
+    <h2 class="head">Pick the night you want.</h2>
+    <p class="body">The same deck pulls different. Lighter for a dinner party. Heavier for a Sunday. Vault Rule applies to all five.</p>
+    <div class="modeGrid stagger">
+      <div class="modeCard" data-jump="Quick Laugh">
+        <div class="mode-name">Quick Laugh</div>
+        <p class="mode-blurb">Recognition humor. Safe to pull at a dinner party.</p>
+        <p class="mode-sample">“Show the face your family makes when guests overstay.”</p>
+      </div>
+      <div class="modeCard" data-jump="Subtitles">
+        <div class="mode-name">Subtitles</div>
+        <p class="mode-blurb">The cultural subtext underneath what just happened.</p>
+        <p class="mode-sample">“What does your family do instead of saying ‘I love you’?”</p>
+      </div>
+      <div class="modeCard" data-jump="Hot Take">
+        <div class="mode-name">Hot Take</div>
+        <p class="mode-blurb">Pick a side. Defend it. Keep it light.</p>
+        <p class="mode-sample">“Whose holidays got more airtime in your home this year — and is that fair?”</p>
+      </div>
+      <div class="modeCard" data-jump="Family Table">
+        <div class="mode-name">Family Table</div>
+        <p class="mode-blurb">Built for a meal. Ends with a House Card prompt.</p>
+        <p class="mode-sample">“A tradition you don’t want to explain anymore — you just want it honored.”</p>
+      </div>
+      <div class="modeCard" data-jump="Deep Cut">
+        <div class="mode-name">Deep Cut</div>
+        <p class="mode-blurb">Slower. Heavier. Vault Rule is your friend.</p>
+        <p class="mode-sample">“When did you realize they were doing the work?”</p>
+      </div>
+    </div>
   </div>
+</section>
+
+<!-- ============= SAMPLE CARDS CAROUSEL ============= -->
+<section class="section" id="cards">
+  <div class="shell">
+    <span class="eyebrow">Nine categories. The whole emotional spectrum of a household.</span>
+    <h2 class="head">Sample cards.</h2>
+    <p class="body">Subtitles, Please · Wait, That’s Not Normal? · Guess Me · The Untranslatable · Family Group Chat · Plot Twist · Crossing Over · Hot Take · Receipts. Swipe →</p>
+    <div class="cardCarouselWrap">
+      <div class="cardCarousel">
+        <div class="miniCard"><div><div class="tab">Subtitles, Please</div></div><p>What does your family do <em>instead</em> of saying “I love you”?</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard gold"><div><div class="tab">Wait, That’s Not Normal?</div></div><p>What did you think was normal until you saw my family do the opposite?</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard sage"><div><div class="tab">Guess Me</div></div><p>If our moms showed up unannounced for two weeks, who panics first?</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard"><div><div class="tab">The Untranslatable</div></div><p>Teach me a word from your language that English absolutely butchers.</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard gold"><div><div class="tab">Family Group Chat</div></div><p>Both our families show up for one weekend. What breaks first?</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard sage"><div><div class="tab">Plot Twist</div></div><p>A thing about your own culture you secretly don’t love.</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard"><div><div class="tab">Crossing Over</div></div><p>The first word you said in my language that made my chest tighten.</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard gold"><div><div class="tab">Hot Take</div></div><p>Hot take: shoes inside the house — civil war starts here.</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+        <div class="miniCard sage"><div><div class="tab">Receipts</div></div><p>Whose holidays got more airtime in your home this year — and is that fair?</p><button class="tag-cta">Tag the person who needs to answer this →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= HOUSE CARDS ============= -->
+<section class="section featureSection">
+  <div class="shell">
+    <div class="bigFeature">
+      <div>
+        <span class="eyebrow">The deck that grows with you</span>
+        <h2 class="head">House Cards.</h2>
+        <p class="body">Every session ends with a House Card. One inside joke, ritual, phrase, or rule from tonight. You write it. It lives in the box. By session thirty, half the deck is your marriage.</p>
+        <p class="body" style="margin-top:14px;font-style:italic;color:var(--gold);font-family:var(--serif);font-size:20px">“Sunday is for slow soup.” &nbsp;·&nbsp; “We don’t apologize over text.” &nbsp;·&nbsp; “Karibu means I have already set a place for you.”</p>
+      </div>
+      <div class="houseStack">
+        <div class="hc hc-1"><div class="hc-mark">house · 03</div><div class="hc-body" style="margin-top:12px">We don’t apologize over text.</div><div class="hc-stamp">Mar 2026</div></div>
+        <div class="hc hc-3"><div class="hc-mark">house · 02</div><div class="hc-body" style="margin-top:12px">Sunday is for slow soup.</div><div class="hc-stamp">Feb 2026</div></div>
+        <div class="hc hc-2"><div class="hc-mark">house · 01</div><div class="hc-body" style="margin-top:12px">Karibu means I have already set a place for you.</div><div class="hc-stamp">Jan 2026</div></div>
+        <div class="hc hc-blank"><div class="hc-mark">tonight</div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div><div class="hc-stamp">May 2026</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PHONE POUCH ============= -->
+<section class="section">
+  <div class="shell">
+    <div class="bigFeature">
+      <div class="visual">
+        <div class="pouch"></div>
+      </div>
+      <div>
+        <span class="eyebrow">The friction is the feature</span>
+        <h2 class="head">Phones in the pouch.<br>Hands on the cards.</h2>
+        <p class="body">Every box ships with two cloth pouches. Phones go in. Pouches zip closed. The game cannot start until they are. Designed to replace ninety minutes of doomscrolling, not ninety minutes of therapy.</p>
+        <p class="body" style="margin-top:18px;color:var(--gold);font-family:var(--serif);font-size:22px;font-style:italic">You have seven days a week for your phone. Your relationship gets one hour.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= VAULT RULE ============= -->
+<div class="vaultBanner">
+  <span class="vault-label">The Vault Rule</span>
+  <p>Pass any card. No explanation needed. The Vault Rule is printed on every card and on the box.</p>
 </div>
 
-<!-- ④ MOMENT CARDS -->
-<section class="moments">
-  <div class="moments-inner">
-    <div class="moments-header reveal">
-      <p class="section-label">What We're Trying To Solve</p>
-      <h2>The moments no one<br>has made a game for. <em>Yet.</em></h2>
+<!-- ============= AUDIENCE ============= -->
+<section class="section">
+  <div class="shell">
+    <span class="eyebrow">Who it’s for</span>
+    <h2 class="head">You just have to recognize at least one of these.</h2>
+    <p class="body">You don’t need a label or a perfect description. If any of these feels familiar, your voice belongs in this.</p>
+    <div class="audGrid stagger">
+      <div class="aud"><div class="glyph">S</div><h4>The “Subtitles” moment</h4><p>When the room is laughing and you’re smiling along — understanding the words but not the joke.</p></div>
+      <div class="aud"><div class="glyph">?</div><h4>The “Which one are you?” moment</h4><p>When your child, or you, gets asked to check one box. As if identity worked like a multiple choice.</p></div>
+      <div class="aud"><div class="glyph">U</div><h4>The Untranslatable</h4><p>The word in your language that carries an entire philosophy. The concept your partner half-understands.</p></div>
+      <div class="aud"><div class="glyph">F</div><h4>The Fading Tradition</h4><p>The ritual your grandmother did, your mother did less, you almost never. The one you’re quietly afraid your kid won’t know.</p></div>
+      <div class="aud"><div class="glyph">R</div><h4>The “Whose Rules?” moment</h4><p>When a parenting disagreement isn’t really about parenting. It’s about two inherited ideas of what respect even means.</p></div>
+      <div class="aud"><div class="glyph">H</div><h4>The “Where is Home?” moment</h4><p>When someone asks and you pause. Not because you don’t know — because the honest answer is too long for small talk.</p></div>
     </div>
+  </div>
+</section>
 
-    <div class="moments-grid">
-      <div class="moment-card reveal">
-        <span class="moment-icon">🎭</span>
-        <h3>The "Subtitles" Moment</h3>
-        <p>When your partner's family is all laughing and you're smiling along, understanding the words but not the joke. The cultural subtext that never got translated.</p>
-      </div>
-      <div class="moment-card gold-accent reveal reveal-delay-1">
-        <span class="moment-icon">🪪</span>
-        <h3>The "Which One Are You?" Moment</h3>
-        <p>When your child, or you, gets asked to check one box, pick one side, claim one culture. As if identity worked like a multiple choice question.</p>
-      </div>
-      <div class="moment-card sage-accent reveal reveal-delay-2">
-        <span class="moment-icon">🌍</span>
-        <h3>The "Untranslatable" Moment</h3>
-        <p>The word in your language that carries an entire philosophy. The concept your partner half-understands but has never fully felt. The thing you gave up trying to explain.</p>
-      </div>
-      <div class="moment-card reveal">
-        <span class="moment-icon">🕯️</span>
-        <h3>The "Fading Tradition" Moment</h3>
-        <p>The ritual your grandmother did, that your mother did less of, that you do almost never. The thing you're quietly afraid your children won't know at all.</p>
-      </div>
-      <div class="moment-card gold-accent reveal reveal-delay-1">
-        <span class="moment-icon">⚖️</span>
-        <h3>The "Whose Rules?" Moment</h3>
-        <p>When a parenting disagreement isn't really about parenting. It's about two completely different inherited ideas of what "respect" or "family" actually means.</p>
-      </div>
-      <div class="moment-card sage-accent reveal reveal-delay-2">
-        <span class="moment-icon">🏡</span>
-        <h3>The "Where Is Home?" Moment</h3>
-        <p>When someone asks and you pause — not because you don't know, but because the honest answer is too complicated for the small talk it was meant to be.</p>
+<!-- ============= FOUNDER ============= -->
+<section class="section founderSection" id="story">
+  <div class="shell">
+    <span class="eyebrow">How this game found its founders</span>
+    <div class="founder" style="margin-top:30px">
+      <div class="founderPhoto"><span class="photo-cap">Bill &amp; Lili Omondi · Nairobi → U.S.</span></div>
+      <div class="founderBody">
+        <p>We are Bill and Lili. We loved game nights;  the laughter, the chaos, the shared references that made everyone feel included. But sometimes a single joke, a movie quote, or a pop culture reference could remind you what it feels like to be the only person in the room outside the story. Not because I didn’t understand the words, but because Icouldn’t access the invisible layer underneath.</p>
+        <p>So I did what a lot of people do when they don’t want to look stupid in a room full of people who all seem to belong: <em>I declined to play.</em></p>
+        <p>So Bill did something else. He learned my language. He studied Kenya’s political history, the foods, the textures, the inside jokes of an entire civilization he hadn’t grown up inside. Not because he had to. Because he wanted to live inside my reality the way I had always been expected to live inside his.</p>
+        <div class="pullQuote">He learned my language. That’s what brought us closer than any game ever had.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ⑤ WHO WE WANT -->
-<section class="who">
-  <div class="who-inner">
-    <div class="who-intro reveal">
-      <p class="section-label">Who We're Looking For</p>
-      <h2>You just have to recognize<br><em>at least one</em> of these.</h2>
-      <p>You don't need a label or a perfect description. If any of these feel familiar, your voice belongs in this.</p>
+<!-- ============= FINAL CTA ============= -->
+<section class="section finalCTA" id="cta">
+  <div class="shell">
+    <div style="text-align:center;max-width:700px;margin:0 auto">
+      <span class="eyebrow">Three ways in</span>
+      <h2 class="head">Be in the first deck.</h2>
+      <p class="body" style="margin:0 auto;color:var(--cream-warm)">Early voices shape what gets built. Pick the version of involvement that fits.</p>
     </div>
 
-    <div class="who-grid">
-      <div class="who-card reveal">
-        <div class="who-dot"></div>
-        <div>
-          <h4>Intercultural or interracial couples</h4>
-          <p>Partners from different countries or racial backgrounds navigating love across cultural lines.</p>
-        </div>
+    <div class="ctaTiles">
+      <div class="ctaTile featured">
+        <span class="badge">Free</span>
+        <h4>Play the beta deck</h4>
+        <p>The first forty cards as a free PDF. Print at home. Play this weekend. Tell us what landed and what flopped.</p>
+        <a href="mailto:thirdculturegames@gmail.com?subject=Beta%20Tester%20-%20Third%20Culture%20Game" class="ctabtn">Send me the beta deck →</a>
       </div>
-      <div class="who-card reveal reveal-delay-1">
-        <div class="who-dot terra"></div>
-        <div>
-          <h4>Families with mixed-race or multicultural children</h4>
-          <p>Parents trying to give their kids the fullness of both heritages without making them choose.</p>
-        </div>
+      <div class="ctaTile">
+        <span class="badge">4 minutes</span>
+        <h4>Help shape the next deck</h4>
+        <p>Thirteen questions. Your story could be in the first print run. We read every single response.</p>
+        <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" rel="noopener" class="ctabtn ghost">Add my voice (4 min) →</a>
       </div>
-      <div class="who-card reveal">
-        <div class="who-dot sage"></div>
-        <div>
-          <h4>Third Culture Kids and adults</h4>
-          <p>You grew up between two worlds. You code-switch fluently. You still pause at "where are you from?"</p>
-        </div>
-      </div>
-      <div class="who-card reveal reveal-delay-1">
-        <div class="who-dot"></div>
-        <div>
-          <h4>Same-country, different-world couples</h4>
-          <p>Both American, but one grew up rural and religious, one urban and secular. Culture isn't just passports.</p>
-        </div>
-      </div>
-      <div class="who-card reveal">
-        <div class="who-dot terra"></div>
-        <div>
-          <h4>First-generation immigrants and their families</h4>
-          <p>The tightrope walk between honoring where you came from and building where you landed.</p>
-        </div>
-      </div>
-      <div class="who-card reveal reveal-delay-1">
-        <div class="who-dot sage"></div>
-        <div>
-          <h4>Anyone who's ever felt like the outsider at the table</h4>
-          <p>If you've ever watched a game night and thought "this wasn't built for me," we want to hear from you.</p>
-        </div>
+      <div class="ctaTile">
+        <span class="badge">First print</span>
+        <h4>The waitlist</h4>
+        <p>Be first to get the gateway box <em>Show Me the Sigh</em> when it ships. We’ll email you exactly once.</p>
+        <a href="mailto:thirdculturegames@gmail.com?subject=Waitlist%20-%20Third%20Culture%20Game" class="ctabtn ghost">Save my spot →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ⑥ PROMISES -->
-<section class="promises">
-  <p class="section-label reveal">Before You Share</p>
-  <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,3.5vw,2.2rem); font-weight:300; line-height:1.3; margin-bottom:8px;">Our commitments <em>to you.</em></h2>
-  <p class="reveal" style="font-size:0.88rem; color:var(--muted); line-height:1.7;">We asked for your trust. Here is what we're promising in return.</p>
-
-  <div class="promise-list reveal">
-    <div class="promise-item">
-      <div class="promise-check">✓</div>
-      <p><strong>We never sell or share your responses.</strong> Your stories are contributions, not data points. They'll be treated with that weight.</p>
+<!-- ============= FOOTER ============= -->
+<footer class="foot">
+  <div class="shell">
+    <div class="footRow">
+      <div>
+        <div class="mark" style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cream);margin-bottom:12px">The Third Culture</div>
+        <p class="trust">We never sell your responses. Contributors get credited if they want to be. The first deck ships to the people who shaped it.</p>
+      </div>
+      <div class="col">
+        <h5>Visit</h5>
+        <a href="#story">Story</a>
+        <a href="#cards">The deck</a>
+        <a href="#cta">Beta</a>
+        <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" rel="noopener">Survey</a>
+      </div>
+      <div class="col">
+        <h5>Reach us</h5>
+        <a href="mailto:thirdculturegames@gmail.com">thirdculturegames@gmail.com</a>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Substack</a>
+      </div>
     </div>
-    <div class="promise-item">
-      <div class="promise-check">✓</div>
-      <p><strong>You will be credited if you want to be.</strong> Contributors who shape the game will be acknowledged in the final product as co-creators, not just "research participants."</p>
+    <div class="copy">
+      <span>© 2026 The Third Culture</span>
+      <span>Built with intention. For families like ours.</span>
     </div>
-    <div class="promise-item">
-      <div class="promise-check">✓</div>
-      <p><strong>Beta testers get first access.</strong> If you opt in, you play it before anyone else and your feedback directly changes it.</p>
-    </div>
-    <div class="promise-item">
-      <div class="promise-check">✓</div>
-      <p><strong>We're asking about your experience, not your ideas.</strong> The pain you share helps us build the container. You keep everything else.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ⑦ FINAL CTA -->
-<section class="final-cta" id="survey">
-  <p class="eyebrow reveal">4 Minutes · 13 Questions · Real Impact</p>
-  <h2 class="reveal">Your story could be in<br><em>the first prototype.</em></h2>
-  <p class="reveal">We're building this summer. Early voices shape it most. Tell us about your experience: the moments, the words that didn't translate, the quiet times you smiled and went quiet. That's the foundation.</p>
-  <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" class="btn-white reveal">Add Your Voice (4 min) →</a>
-  <div class="final-meta reveal">
-    You can skip any question you prefer not to answer &nbsp;·&nbsp;
-    Want to be a beta tester instead? <a href="mailto:thirdculturegames@gmail.com?subject=Beta Tester - Third Culture Game">Email Bill and Lili directly</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">The Third Culture</span>
-  <div class="footer-note">
-    <p>© 2026 · All concepts and materials protected.</p>
-    <p>Built with intention. For families like ours.</p>
   </div>
 </footer>
 
+<div class="toast" id="toast">Card sent.</div>
+
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+// ===== Card deck =====
+const deck = {
+  'Quick Laugh':[
+    {p:'Show the face your family makes when guests overstay.', w:'Both of you have one. The face is universal — the timing, the eyebrow, the sigh? Those are inherited.', n:'01'},
+    {p:'What’s one thing my family does that your family would need a meeting about?', w:'Different families have different defaults for spontaneity. The “meeting” is the giveaway — formality vs flow is one of the quietest cultural splits there is.', n:'02'},
+    {p:'Both our families show up for one weekend. What breaks first?', w:'Compatibility test in eight words. Whatever you each name reveals what your family does well — and what mine notices first when it doesn’t.', n:'03'},
+  ],
+  'Subtitles':[
+    {p:'What does your family do instead of saying “I love you”?', w:'Some families say it. Some cut fruit. Some send money. Some just stare until you understand. The translation is the whole story.', n:'04'},
+    {p:'What did you think was normal until you saw my family do the opposite?', w:'Every family is the standard — until it isn’t. The first time you realized your normal had a culture attached to it is the moment the brand was built for.', n:'05'},
+    {p:'Translate the look your partner gives you the second their mom calls.', w:'Reading a look across a cultural line is a skill. Most couples never name it. This card names it.', n:'06'},
+  ],
+  'Hot Take':[
+    {p:'Whose holidays got more airtime in your home this year — and is that fair?', w:'The asymmetric conformity pattern, named. Most couples never count. The honest answer is rarely a tie.', n:'07'},
+    {p:'Hot take: shoes inside the house — civil war starts here. Defend your side.', w:'Decade-old debate, infinite re-engagement. Low-risk, high-volume. Probably the safest argument you’ll ever have.', n:'08'},
+    {p:'Punctuality is a personality, not a virtue. Yes or no.', w:'Time is one of the most quietly cultural things there is. This card forces both of you to name where you actually sit.', n:'09'},
+  ],
+  'Family Table':[
+    {p:'What’s a tradition you don’t want to explain anymore — you just want it honored?', w:'A great card to land at a meal. Notice that the ask is not for understanding. It’s for honor without explanation. That’s a different kind of love.', n:'10'},
+    {p:'A duty your family raised you with that mine doesn’t even classify as a duty.', w:'Some homes treat helping a relative as the body taking care of itself. Other homes treat it as going out of your way. Both are real. Naming which one yours is matters.', n:'11'},
+    {p:'Whose family throws the better wedding — and why is yours wrong?', w:'Engagement-season debate, built for the dinner table. Designed to land funny and stay funny.', n:'12'},
+  ],
+  'Deep Cut':[
+    {p:'When did you realize they were doing the work?', w:'The brand thesis in a single sentence. Soft launch your partner being a real one. The card most likely to make someone send the deck to a sibling.', n:'13'},
+    {p:'When was the last time you felt like a guest in your own home?', w:'The question every immigrant partner has answered silently. Vault Rule is your friend here — but answered out loud, it changes things.', n:'14'},
+    {p:'A thing about your own culture you secretly don’t love.', w:'Permission to be honest about the culture you came from. Rare in this content category. Edges this brand into territory others won’t go.', n:'15'},
+  ],
+};
+
+// ===== Mode + card state =====
+let mode = 'Quick Laugh';
+let idx = 0;
+
+const tab = document.getElementById('cardTab');
+const prompt = document.getElementById('cardPrompt');
+const num = document.getElementById('cardNum');
+const flipper = document.getElementById('flipper');
+const backTitle = document.getElementById('backTitle');
+const backBody = document.getElementById('backBody');
+const revealBtn = document.getElementById('revealBtn');
+
+function renderCard(){
+  const card = deck[mode][idx % deck[mode].length];
+  // unflip if flipped, with content swap behind
+  flipper.classList.remove('flipped');
+  setTimeout(()=>{
+    tab.textContent = mode === 'Quick Laugh' ? 'Quick Laugh' :
+                      mode === 'Subtitles' ? 'Subtitles, Please' :
+                      mode === 'Hot Take' ? 'Hot Take' :
+                      mode === 'Family Table' ? 'Family Table' : 'Deep Cut';
+    prompt.innerHTML = card.p.replace(/\b(instead|love)\b/g, '<em>$1</em>');
+    num.textContent = '№ ' + card.n;
+    backBody.textContent = card.w;
+  }, 60);
+}
+
+document.querySelectorAll('.mode').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    mode = b.dataset.mode;
+    idx = 0;
+    renderCard();
+  });
+});
+
+document.getElementById('pullAnother').addEventListener('click',()=>{
+  idx = (idx + 1) % deck[mode].length;
+  renderCard();
+});
+
+// flip on card tap or reveal button
+function doFlip(){ flipper.classList.toggle('flipped'); }
+document.querySelector('.demoCard').addEventListener('click',(e)=>{
+  if (e.target.closest('button')) return; // don't double-trigger
+  doFlip();
+});
+revealBtn.addEventListener('click',doFlip);
+document.getElementById('flipBack').addEventListener('click',(e)=>{e.stopPropagation();doFlip();});
+
+// hero card → jump + flip
+document.getElementById('heroCard').addEventListener('click',()=>{
+  document.getElementById('demo').scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{ flipper.classList.add('flipped'); }, 800);
+});
+document.getElementById('heroCard').addEventListener('keydown',(e)=>{
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('heroCard').click(); }
+});
+
+// mode card jumps
+document.querySelectorAll('.modeCard').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const target = c.dataset.jump;
+    document.querySelectorAll('.mode').forEach(b=>{
+      if (b.dataset.mode === target) b.click();
     });
-  }, { threshold: 0.1 });
+    document.getElementById('demo').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ===== Share tray =====
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+document.querySelectorAll('.share').forEach(b=>{
+  b.addEventListener('click', async ()=>{
+    const card = deck[mode][idx % deck[mode].length];
+    const text = card.p + '\n\nA card from The Third Culture. https://thethirdculture.game';
+    const action = b.dataset.share;
+
+    if (action === 'partner'){
+      if (navigator.share){
+        try { await navigator.share({title:'The Third Culture', text}); toast('Shared.'); }
+        catch(_) {}
+      } else {
+        await navigator.clipboard?.writeText(text);
+        toast('Card copied — paste it to your partner.');
+      }
+    } else if (action === 'screenshot'){
+      toast('Screenshot this card — the brand frame is the share.');
+    } else if (action === 'beta'){
+      document.getElementById('cta').scrollIntoView({behavior:'smooth'});
+    }
+  });
+});
+
+document.querySelectorAll('.tag-cta').forEach(b=>{
+  b.addEventListener('click', async (e)=>{
+    e.stopPropagation();
+    const cardText = b.closest('.miniCard').querySelector('p').textContent;
+    const text = cardText + '\n\nThe Third Culture.';
+    if (navigator.share){
+      try { await navigator.share({title:'The Third Culture', text}); } catch(_){}
+    } else {
+      await navigator.clipboard?.writeText(text);
+      toast('Copied — tag away.');
+    }
+  });
+});
+
+// ===== Stagger reveal on scroll =====
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.18});
+document.querySelectorAll('.stagger').forEach(el=>io.observe(el));
+
+// ===== Render first card =====
+renderCard();
 </script>
-
 </body>
 </html>
