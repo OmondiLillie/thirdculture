@@ -250,6 +250,149 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
 
 /* focus */
 :focus-visible{outline:2px solid var(--highlight);outline-offset:2px;border-radius:6px}
+
+/* ===== UX clarity pass — additions below ===== */
+
+/* hero — clearer product hierarchy */
+.hero-lead{font-family:var(--sans);font-size:clamp(18px,2.1vw,22px);font-weight:500;line-height:1.45;color:var(--cream);max-width:30ch;margin:8px 0 14px;letter-spacing:-.005em}
+.hero-body{font-size:15px;color:var(--cream-warm);opacity:.78;max-width:48ch;margin-bottom:6px}
+@media(min-width:760px){.hero-body{font-size:16px}}
+.hero .ctas{margin-top:28px}
+.btn-primary{font-size:16px}
+@media(min-width:760px){.btn-primary{padding:16px 26px;font-size:16px}}
+
+/* ===== HOW IT WORKS ===== */
+.how{padding:64px 0;background:var(--espresso)}
+@media(min-width:760px){.how{padding:90px 0}}
+.how .head{max-width:24ch}
+.howGrid{display:grid;grid-template-columns:1fr;gap:22px;margin-top:36px}
+@media(min-width:680px){.howGrid{grid-template-columns:1fr 1fr;gap:30px 36px}}
+@media(min-width:1020px){.howGrid{grid-template-columns:repeat(4,1fr);gap:36px}}
+.howStep{position:relative;padding-top:10px}
+.howStep + .howStep::before{display:none}
+@media(min-width:1020px){
+  .howStep + .howStep::before{content:"";display:block;position:absolute;left:-20px;top:24px;width:1px;height:48px;background:rgba(245,237,217,.10)}
+}
+.howNum{font-family:var(--serif);font-style:italic;font-size:34px;color:var(--gold);line-height:1;margin-bottom:14px;letter-spacing:-.02em}
+.howStep h4{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--cream);margin-bottom:8px;line-height:1.15}
+.howStep p{font-size:14.5px;color:var(--cream-warm);line-height:1.55;max-width:34ch;opacity:.85}
+
+/* ===== DEMO — simplified controls ===== */
+.demoCtrls{margin-top:26px;display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.pullAnotherBtn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 22px;border-radius:99px;font-weight:600;font-size:15px;
+  background:rgba(212,168,90,.10);
+  border:1px solid rgba(212,168,90,.40);
+  color:var(--gold);letter-spacing:.005em;
+  transition:all .2s ease
+}
+.pullAnotherBtn:hover{background:rgba(212,168,90,.20);color:var(--cream);border-color:var(--gold);transform:translateY(-1px)}
+.secondaryActions{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:6px 10px;font-size:13px;color:var(--cream-warm);
+  margin-top:6px
+}
+.secondaryActions .textLink{
+  background:transparent;border:0;padding:6px 4px;font-size:13px;
+  color:var(--cream-warm);cursor:pointer;letter-spacing:.005em;
+  text-decoration:underline;text-decoration-color:rgba(245,237,217,.18);
+  text-underline-offset:4px;transition:all .2s ease
+}
+.secondaryActions .textLink:hover{color:var(--terracotta);text-decoration-color:var(--terracotta)}
+.secondaryActions .sep{color:rgba(245,237,217,.25);font-size:11px;user-select:none}
+.demoBetaNudge{
+  text-align:center;font-size:13px;color:var(--gold);margin-top:4px;
+  text-decoration:underline;text-decoration-color:rgba(212,168,90,.32);text-underline-offset:4px
+}
+.demoBetaNudge:hover{color:var(--cream)}
+.demoTapHint{
+  display:block;text-align:center;margin-top:14px;font-size:12px;
+  color:var(--cream-warm);opacity:.55;letter-spacing:.08em;text-transform:uppercase
+}
+
+/* ===== ANTI-CLAIMS — simplified two-column Not/Yes ===== */
+.anti-claims{padding:72px 0}
+@media(min-width:760px){.anti-claims{padding:110px 0}}
+.anti-claims .head{max-width:22ch;margin-bottom:50px}
+.anti-grid{display:grid;grid-template-columns:1fr;gap:38px}
+@media(min-width:760px){.anti-grid{grid-template-columns:1fr 1fr;gap:60px}}
+.anti-col{display:flex;flex-direction:column;gap:22px}
+.anti-h{
+  font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding-bottom:14px;border-bottom:1px solid rgba(245,237,217,.10);
+  margin-bottom:6px
+}
+.anti-col:nth-child(1) .anti-h{color:var(--terracotta)}
+.anti-col:nth-child(2) .anti-h{color:var(--sage)}
+.anti-item{font-family:var(--sans);font-size:15.5px;line-height:1.6;color:var(--cream-warm)}
+.anti-item strong{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--cream);font-size:19px;margin-right:6px}
+@media(min-width:760px){.anti-item{font-size:16px}.anti-item strong{font-size:21px}}
+
+/* ===== POUCH KARIBU — better visibility ===== */
+.bigFeature .pouch::after{
+  content:"karibu.";
+  position:absolute;bottom:24%;left:0;right:0;
+  text-align:center;
+  font-family:var(--serif);font-style:italic;font-weight:500;
+  font-size:clamp(28px,5.4vw,42px);letter-spacing:-.01em;
+  color:#F4E6CC;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.45),
+    0 2px 6px rgba(0,0,0,.35),
+    0 0 22px rgba(196,106,76,.4);
+}
+.bigFeature .pouch{
+  background:linear-gradient(165deg,#8A9871 0%, #6F7E59 100%);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.45),
+    inset 0 -12px 30px rgba(0,0,0,.28),
+    inset 0 4px 16px rgba(255,255,255,.06)
+}
+/* subtle embroidery hint */
+.bigFeature .pouch{position:relative}
+
+/* ===== FINAL CTA — one dominant + secondaries ===== */
+.finalCTA{padding:90px 0}
+@media(min-width:760px){.finalCTA{padding:130px 0}}
+.primaryCTAblock{text-align:center;max-width:600px;margin:0 auto}
+.primaryCTAblock .head{margin-bottom:14px}
+.primaryCTAblock p.body{margin:0 auto 26px;color:var(--cream-warm)}
+.primaryCTAblock .btn-primary{
+  padding:18px 30px;font-size:16.5px;
+  box-shadow:0 8px 32px rgba(196,106,76,.4), inset 0 -2px 0 rgba(0,0,0,.18)
+}
+.secondaryCTAs{
+  display:grid;grid-template-columns:1fr;gap:14px;
+  margin-top:60px;max-width:780px;margin-left:auto;margin-right:auto
+}
+@media(min-width:680px){.secondaryCTAs{grid-template-columns:1fr 1fr;gap:18px}}
+.secondaryCTA{
+  display:block;padding:22px;border-radius:var(--radius);
+  border:1px solid rgba(245,237,217,.10);
+  background:transparent;
+  transition:all .25s ease;color:inherit
+}
+.secondaryCTA:hover{border-color:var(--gold);background:rgba(212,168,90,.04);transform:translateY(-2px)}
+.secondaryCTA-eyebrow{
+  font-family:var(--sans);font-size:10px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  display:block;margin-bottom:10px
+}
+.secondaryCTA h4{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--cream);margin-bottom:6px;line-height:1.2}
+.secondaryCTA p{font-size:13.5px;color:var(--cream-warm);line-height:1.5;opacity:.85}
+.secondaryCTA::after{content:"→";display:inline-block;color:var(--terracotta);margin-left:6px;transition:transform .2s ease}
+.secondaryCTA:hover::after{transform:translateX(3px)}
+
+/* ===== Pacing & breathing room ===== */
+.section{padding:78px 0}
+@media(min-width:760px){.section{padding:130px 0}}
+.demoSection{padding:78px 0}
+@media(min-width:760px){.demoSection{padding:120px 0}}
+.eyebrow{margin-bottom:14px;display:inline-block}
+.head + .body{margin-top:18px}
+
 </style>
 </head>
 <body>
@@ -270,12 +413,12 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
       <div>
         <span class="kicker">A game in the making</span>
         <h1 class="lede">Some games have a home advantage.<br><em style="font-style:italic;color:var(--terracotta)">This one doesn’t.</em></h1>
-        <p class="body" style="max-width:54ch">A phone-down card game for couples and families building a culture of their own. Not therapy. Not trivia. Just the conversations you keep having to translate, finally turned into a game.</p>
+        <p class="hero-lead">A phone-down card game for couples and families building a culture of their own.</p>
+        <p class="body hero-body">Not therapy. Not trivia. Just the conversations you keep having to translate, finally turned into a game.</p>
         <div class="ctas">
-          <a href="#demo" class="btn btn-primary" id="heroPrimary">Pull a Card <span class="arrow">→</span></a>
-          <a href="#cta" class="btn btn-ghost">Join the Beta</a>
+          <a href="#cta" class="btn btn-primary" id="heroPrimary">Play the beta deck <span class="arrow">→</span></a>
+          <a href="#demo" class="btn btn-ghost">Try a sample card</a>
         </div>
-        <p class="tiny">For families that celebrate more than one kind of home.</p>
       </div>
 
       <div class="heroCard" id="heroCard" role="button" tabindex="0" aria-label="Sample card — tap to play">
@@ -294,6 +437,36 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
     </div>
   </div>
 </header>
+
+<!-- ============= HOW IT WORKS ============= -->
+<section class="section how" id="how">
+  <div class="shell">
+    <span class="eyebrow">How a night actually goes</span>
+    <h2 class="head">Four steps. That’s the whole game.</h2>
+    <div class="howGrid stagger">
+      <div class="howStep">
+        <div class="howNum">01</div>
+        <h4>Pick a mode</h4>
+        <p>Five to choose from. Quick Laugh for a dinner party. Deep Cut for a Sunday.</p>
+      </div>
+      <div class="howStep">
+        <div class="howNum">02</div>
+        <h4>Pull a card</h4>
+        <p>The deck does the rest. Read it out loud once before you answer.</p>
+      </div>
+      <div class="howStep">
+        <div class="howNum">03</div>
+        <h4>Answer, debate, or pass</h4>
+        <p>The Vault Rule applies to every card. Pass without explaining.</p>
+      </div>
+      <div class="howStep">
+        <div class="howNum">04</div>
+        <h4>End with a House Card</h4>
+        <p>One inside joke, ritual, or rule from tonight. Write it. Keep it.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============= DEMO ============= -->
 <section class="section demoSection" id="demo">
@@ -315,13 +488,16 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
         </div>
 
         <div class="demoCtrls">
-          <button class="revealBtn" id="revealBtn">Reveal why this hits ↓</button>
-          <div class="shareRow">
-            <button class="share" data-share="partner">↗  Send to your partner</button>
-            <button class="share" data-share="screenshot">📷  Screenshot ready</button>
-            <button class="share ghost" data-share="beta">Save for the beta</button>
+          <button class="pullAnotherBtn" id="pullAnother">Pull another card  →</button>
+          <div class="secondaryActions">
+            <button class="textLink" id="revealBtn">↓ Why this hits</button>
+            <span class="sep">·</span>
+            <button class="textLink share" data-share="partner">↗ Send to partner</button>
+            <span class="sep">·</span>
+            <button class="textLink share" data-share="screenshot">Screenshot</button>
           </div>
-          <div class="pullMore"><button id="pullAnother">Pull another →</button></div>
+          <button class="demoBetaNudge share" data-share="beta">Save this for the beta deck →</button>
+          <span class="demoTapHint">Tap the card to flip</span>
         </div>
       </div>
 
@@ -353,34 +529,22 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
 </section>
 
 <!-- ============= WHAT THIS IS / ISN'T ============= -->
-<section class="section">
+<section class="section anti-claims">
   <div class="shell">
-    <span class="eyebrow">Category fence-posting</span>
-    <h2 class="head">Three things this game <em>isn’t</em>. And three it <em>is</em>.</h2>
-    <div class="tiles3 stagger">
-      <div class="tile">
-        <span class="tile-x">✕  Not therapy</span>
-        <p>The Vault Rule means you can pass any card without explaining yourself. Boundary-setting is built in.</p>
+    <span class="eyebrow">What it is. What it isn’t.</span>
+    <h2 class="head">Three things this game isn’t. And three it is.</h2>
+    <div class="anti-grid stagger">
+      <div class="anti-col">
+        <h3 class="anti-h">Not</h3>
+        <div class="anti-item"><strong>Therapy.</strong>Pass any card. No explanation needed.</div>
+        <div class="anti-item"><strong>Trivia.</strong>Nobody is right. Nobody is being tested.</div>
+        <div class="anti-item"><strong>A generic conversation deck.</strong>Built for people who keep translating themselves at the table.</div>
       </div>
-      <div class="tile">
-        <span class="tile-x">✕  Not trivia</span>
-        <p>Nobody is right. Nobody is being tested. The deck is on your side.</p>
-      </div>
-      <div class="tile">
-        <span class="tile-x">✕  Not a generic conversation deck</span>
-        <p>Built for people who have spent years translating themselves at the dinner table.</p>
-      </div>
-      <div class="tile">
-        <span class="tile-check">✓  A phone-down ritual</span>
-        <p>Phones go in the pouch before the first card. The game cannot start until they do.</p>
-      </div>
-      <div class="tile">
-        <span class="tile-check">✓  Cultural recognition with teeth</span>
-        <p>The kind of laugh that comes from being seen — and from finally putting words on a thing you’d stopped trying to explain.</p>
-      </div>
-      <div class="tile">
-        <span class="tile-check">✓  A box that gets heavier</span>
-        <p>The deck grows with you. House Cards are forever. Most card games end. This one keeps writing itself.</p>
+      <div class="anti-col">
+        <h3 class="anti-h">Yes</h3>
+        <div class="anti-item"><strong>A phone-down ritual.</strong>Pouches zip. Then the game starts.</div>
+        <div class="anti-item"><strong>Cultural recognition with teeth.</strong>The laugh that comes from being seen.</div>
+        <div class="anti-item"><strong>A box that gets heavier.</strong>House Cards stay. The deck grows with you.</div>
       </div>
     </div>
   </div>
@@ -511,9 +675,9 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
     <div class="founder" style="margin-top:30px">
       <div class="founderPhoto"><span class="photo-cap">Bill &amp; Lili Omondi · Nairobi → U.S.</span></div>
       <div class="founderBody">
-        <p>We are Bill and Lili. We loved game nights;  the laughter, the chaos, the shared references that made everyone feel included. But sometimes a single joke, a movie quote, or a pop culture reference could remind you what it feels like to be the only person in the room outside the story. Not because I didn’t understand the words, but because Icouldn’t access the invisible layer underneath.</p>
-        <p>So I did what a lot of people do when they don’t want to look stupid in a room full of people who all seem to belong: <em>I declined to play.</em></p>
-        <p>So Bill did something else. He learned my language. He studied Kenya’s political history, the foods, the textures, the inside jokes of an entire civilization he hadn’t grown up inside. Not because he had to. Because he wanted to live inside my reality the way I had always been expected to live inside his.</p>
+        <p>We’re Bill and Lili. Game nights. Cards Against Humanity. Drawful. Someone would mention Dr. Who and the whole room would light up — Lili would smile and go quiet. Not because she didn’t understand the words. Because she couldn’t access the invisible layer underneath.</p>
+        <p>So she did what a lot of people do when they don’t want to look stupid in a room of people who all seem to belong: <em>she declined to play.</em></p>
+        <p>So Bill learned her language. Kenya’s history, the foods, the inside jokes of a civilization he hadn’t grown up in. Because he wanted to live inside her reality the way she had always been expected to live inside his.</p>
         <div class="pullQuote">He learned my language. That’s what brought us closer than any game ever had.</div>
       </div>
     </div>
@@ -523,31 +687,24 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
 <!-- ============= FINAL CTA ============= -->
 <section class="section finalCTA" id="cta">
   <div class="shell">
-    <div style="text-align:center;max-width:700px;margin:0 auto">
-      <span class="eyebrow">Three ways in</span>
-      <h2 class="head">Be in the first deck.</h2>
-      <p class="body" style="margin:0 auto;color:var(--cream-warm)">Early voices shape what gets built. Pick the version of involvement that fits.</p>
+    <div class="primaryCTAblock">
+      <span class="eyebrow">Be in the first deck</span>
+      <h2 class="head">Get the free beta deck.</h2>
+      <p class="body">The first forty cards as a free PDF. Print at home. Play this weekend. Tell us what landed and what flopped.</p>
+      <a href="mailto:thirdculturegames@gmail.com?subject=Beta%20Tester%20-%20Third%20Culture%20Game" class="btn btn-primary">Send me the beta deck <span class="arrow">→</span></a>
     </div>
 
-    <div class="ctaTiles">
-      <div class="ctaTile featured">
-        <span class="badge">Free</span>
-        <h4>Play the beta deck</h4>
-        <p>The first forty cards as a free PDF. Print at home. Play this weekend. Tell us what landed and what flopped.</p>
-        <a href="mailto:thirdculturegames@gmail.com?subject=Beta%20Tester%20-%20Third%20Culture%20Game" class="ctabtn">Send me the beta deck →</a>
-      </div>
-      <div class="ctaTile">
-        <span class="badge">4 minutes</span>
+    <div class="secondaryCTAs">
+      <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" rel="noopener" class="secondaryCTA">
+        <span class="secondaryCTA-eyebrow">4 minutes · Survey</span>
         <h4>Help shape the next deck</h4>
-        <p>Thirteen questions. Your story could be in the first print run. We read every single response.</p>
-        <a href="https://form.typeform.com/to/NppmW0xd" target="_blank" rel="noopener" class="ctabtn ghost">Add my voice (4 min) →</a>
-      </div>
-      <div class="ctaTile">
-        <span class="badge">First print</span>
-        <h4>The waitlist</h4>
-        <p>Be first to get the gateway box <em>Show Me the Sigh</em> when it ships. We’ll email you exactly once.</p>
-        <a href="mailto:thirdculturegames@gmail.com?subject=Waitlist%20-%20Third%20Culture%20Game" class="ctabtn ghost">Save my spot →</a>
-      </div>
+        <p>Thirteen questions. Your story could be in the first print run.</p>
+      </a>
+      <a href="mailto:thirdculturegames@gmail.com?subject=Waitlist%20-%20Third%20Culture%20Game" class="secondaryCTA">
+        <span class="secondaryCTA-eyebrow">First print · Waitlist</span>
+        <h4>Save my spot</h4>
+        <p>Be first when <em>Show Me the Sigh</em> ships. We’ll email you exactly once.</p>
+      </a>
     </div>
   </div>
 </section>
