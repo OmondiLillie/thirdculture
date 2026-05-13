@@ -203,10 +203,35 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
 /* ---- founder ---- */
 .founderSection{background:var(--espresso)}
 .founder{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
-@media(min-width:760px){.founder{grid-template-columns:.8fr 1.2fr;gap:50px}}
-.founderPhoto{aspect-ratio:4/5;background:linear-gradient(135deg,#5A3E2A 0%,#3A2618 100%);border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:18px}
-.founderPhoto::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 35%, rgba(245,237,217,.10) 0%, transparent 50%)}
-.founderPhoto .photo-cap{position:relative;font-family:var(--serif);font-style:italic;color:var(--cream-warm);font-size:14px;opacity:.85}
+@media(min-width:760px){.founder{grid-template-columns:.85fr 1.15fr;gap:54px}}
+.founderPhoto{aspect-ratio:4/5;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:22px;background:var(--espresso-deep);box-shadow:0 30px 70px rgba(0,0,0,.45), inset 0 0 0 1px rgba(245,237,217,.06)}
+.founderPhoto > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;border-radius:14px}
+/* warm bottom-fade so the caption stays readable on the photo */
+.founderPhoto::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 45%, rgba(20,12,6,.55) 88%, rgba(20,12,6,.78) 100%);
+  z-index:2;pointer-events:none
+}
+/* grain overlay — subtle filmic texture, premium touch */
+.founderPhoto .grain{
+  position:absolute;inset:0;pointer-events:none;z-index:3;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='260' height='260' filter='url(%23n)'/></svg>");
+  background-size:260px 260px;
+  mix-blend-mode:overlay;opacity:.11
+}
+/* warm tone wash — barely-there, gives the image cinematic warmth */
+.founderPhoto .tone{
+  position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(120% 90% at 50% 25%, rgba(212,168,90,.06) 0%, transparent 55%);
+  mix-blend-mode:soft-light
+}
+.founderPhoto .photo-cap{
+  position:relative;z-index:4;
+  font-family:var(--serif);font-style:italic;color:var(--cream);font-size:14px;
+  letter-spacing:.005em;
+  text-shadow:0 1px 4px rgba(0,0,0,.7), 0 0 16px rgba(0,0,0,.4)
+}
+@media(prefers-reduced-motion:reduce){.founderPhoto .grain{display:none}}
 .founderBody p{font-size:17px;color:var(--cream-warm);margin-bottom:14px;line-height:1.6}
 .pullQuote{font-family:var(--serif);font-size:clamp(22px,2.8vw,30px);line-height:1.25;color:var(--terracotta);font-style:italic;border-left:3px solid var(--terracotta);padding:14px 0 14px 20px;margin-top:24px}
 
@@ -673,7 +698,12 @@ p.body{font-size:17px;color:var(--cream-warm);max-width:62ch}
   <div class="shell">
     <span class="eyebrow">How this game found its founders</span>
     <div class="founder" style="margin-top:30px">
-      <div class="founderPhoto"><span class="photo-cap">Bill &amp; Lili Omondi · Nairobi → U.S.</span></div>
+      <div class="founderPhoto">
+        <img src="founders.webp" alt="Bill and Lili Omondi at home — a portrait" loading="lazy" />
+        <div class="tone"></div>
+        <div class="grain"></div>
+        <span class="photo-cap">Bill &amp; Lili Omondi · Nairobi → U.S.</span>
+      </div>
       <div class="founderBody">
         <p>We’re Bill and Lili. Game nights. Cards Against Humanity. Drawful. Someone would mention Dr. Who and the whole room would light up — Lili would smile and go quiet. Not because she didn’t understand the words. Because she couldn’t access the invisible layer underneath.</p>
         <p>So she did what a lot of people do when they don’t want to look stupid in a room of people who all seem to belong: <em>she declined to play.</em></p>
